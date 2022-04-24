@@ -32,6 +32,7 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         networkWeatherManager.onCompletion = { [ weak self ] currentWeather in
             guard let self = self else { return }
             self.updateInterfaceWith(weather: currentWeather)
@@ -52,15 +53,16 @@ class WeatherViewController: UIViewController {
     }
 }
 
+
 // MARK: - CLLocationManagerDelegate
 
 extension WeatherViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        let latitide = location.coordinate.latitude
-        let longtitude = location.coordinate.longitude
+        let latitude = location.coordinate.latitude
+        let longitude = location.coordinate.longitude
         
-        networkWeatherManager.fetchCurrentWeather(forRequestType: .coordinate(latiture: latitide, longitude: longtitude))
+        networkWeatherManager.fetchCurrentWeather(forRequestType: .coordinate(latiture: latitude, longitude: longitude))
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
